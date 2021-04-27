@@ -3,32 +3,53 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <tock.h>
+#include <temperature.h>
 
 // Sizes in bytes
-#define DEVICE_NAME_SIZE 6
 
-int main(void)
-{
-    int err;
+/*******************************************************************************
+ * MAIN
+ ******************************************************************************/
+#define UUIDS_SIZE 2
+#define TEMPERATURE_SIZE 1
 
-    uint16_t advertising_interval_ms = 300;
-    uint8_t device_name[] = "MBW Seb";
+int main(void) {
+  printf("[Project] MBW\n");
 
-    static uint8_t adv_data_buf[ADV_DATA_MAX_SIZE];
+  int specialID1 = 1;
+  int specialID2 = 2;
 
-    printf(" - Initializing BLE... %s\n", device_name);
-    AdvData_t adv_data = gap_adv_data_new(adv_data_buf, sizeof(adv_data_buf));
+  uint16_t interval_ms = 100;
+  uint8_t device_name[] = "MBW1";
+  uint16_t uuids[] = {specialID1, specialID2};
 
-    gap_add_flags(&adv_data, LE_GENERAL_DISCOVERABLE | BREDR_NOT_SUPPORTED);
+  int temperature = 0;
 
-    printf(" - Setting the device name... %s\n", device_name);
+  temperature_read_sync(&temperature);
 
-    printf(" - Begin advertising! %s\n", device_name);
-    err = ble_start_advertising(ADV_NONCONN_IND, adv_data.buf, adv_data.offset, advertising_interval_ms);
-    if (err < TOCK_SUCCESS)
-        printf("ble_start_advertising, error: %s\r\n", tock_strrcode(err));
+  temperature = temperature/100;
 
-    printf("Now advertising every %d ms as '%s'\n", advertising_interval_ms,
-           device_name);
-    return 0;
+  uint8_t dataSend[] = {temperature};
+
+  static uint8_t adv_data_buf[ADV_DATA_MAX_SIZE];
+
+  printf("- Starting Device ... %s\n",device_name);
+  AdvData_t adv_data = gap_adv_data_new(adv_data_buf,sizeof(adv_data_buf));
+
+  gap_add_flags(&adv_data, LE_GENERAL_DISCOVERABLE | BREDR_NOT_SUPPORTED);
+
+  printf(" - Set device name..%s\n",device_name);
+
+  gap_add_service_uuid16(&adv_data, uuids, UUIDS_SIZE);
+
+  printf("- Setting data temperature %d.. \n",temperature);
+
+  gap_add_service_data(&adv_data,uuids[1],dataSend,TEMPERATURE_SIZE);
+
+  printf(" -Begin advertising! %s\n", device_name);
+  ble_start_advertising(ADV_NONCONN_IND, adv_data.buf, adv_data.offset, interval_ms);
+
+  printf(" -Now working evert %d\n",interval_ms);
+
+  return 0;
 }
