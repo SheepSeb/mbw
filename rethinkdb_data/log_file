@@ -1,0 +1,18 @@
+2021-05-02T21:29:25.279061575 0.027451s notice: Recursively removing directory /home/sebnae/Repos/mbw/rethinkdb_data/tmp
+2021-05-02T21:29:25.281332097 0.029723s notice: Initializing directory /home/sebnae/Repos/mbw/rethinkdb_data
+2021-05-02T21:29:25.281395617 0.029784s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/sebnae/Repos/mbw/rethinkdb_data' did not already exist or is empty.)
+2021-05-02T21:29:25.281416247 0.029805s notice: Running rethinkdb 2.4.1~0focal (CLANG 10.0.0 )...
+2021-05-02T21:29:25.282700203 0.031090s notice: Running on Linux 5.8.0-50-generic x86_64
+2021-05-02T21:29:25.282746413 0.031135s notice: Loading data from directory /home/sebnae/Repos/mbw/rethinkdb_data
+2021-05-02T21:29:25.290558177 0.038947s info: Automatically using cache size of 5254 MB
+2021-05-02T21:29:25.291075865 0.039465s notice: Listening for intracluster connections on port 29015
+2021-05-02T21:29:25.291971642 0.040361s notice: Listening for client driver connections on port 28015
+2021-05-02T21:29:25.292001802 0.040391s notice: Listening for administrative HTTP connections on port 8080
+2021-05-02T21:29:25.292003792 0.040393s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2021-05-02T21:29:25.292005652 0.040395s notice: Listening on driver addresses: 127.0.0.1, ::1
+2021-05-02T21:29:25.292007442 0.040396s notice: Listening on http addresses: 127.0.0.1, ::1
+2021-05-02T21:29:25.292010272 0.040399s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2021-05-02T21:29:25.292012172 0.040401s notice: Server ready, "sebnae_MS_7C37_e8c" f784c108-60ab-4388-b9d1-a67b2e27c5ad
+2021-05-02T21:32:37.790362260 192.538751s info: Table d05e6378-0ee2-4389-9fac-de17c91bfc56: Starting a new Raft election for term 1.
+2021-05-02T21:32:37.790476199 192.538865s info: Table d05e6378-0ee2-4389-9fac-de17c91bfc56: Added replica on this server.
+2021-05-02T21:32:37.791269087 192.539658s info: Table d05e6378-0ee2-4389-9fac-de17c91bfc56: This server is Raft leader for term 1. Latest log index is 0.

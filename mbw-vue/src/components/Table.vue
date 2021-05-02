@@ -139,31 +139,15 @@
 export default {
   name: "HelloWorld",
   data: () => ({
-    itemsPerPageArray: [4, 8, 12],
+    itemsPerPageArray: [1, 4, 8, 12],
     search: "",
     filter: {},
     sortDesc: false,
     page: 1,
     itemsPerPage: 4,
     sortBy: "name",
-    keys: ["Name","Temperature","Date"],
-    items: [
-      {
-        name: "MB1",
-        temperature : 30,
-        date: '10.5.2021',
-      },
-      {
-        name: "MB2",
-        temperature : 20,
-        date: '10.5.2021',
-      },
-      {
-        name: "MB3",
-        temperature : 10,
-        date: '10.5.2021',
-      },
-    ],
+    keys: ["Name", "Temperature", "Date"],
+    items: [ {name:'this'}],
   }),
 
   computed: {
