@@ -1,52 +1,25 @@
 import express from 'express'
-import rethinkdb from 'rethinkdb'
+import mongodb from 'mongodb'
 
-const app = express();
 const router = express.Router();
 
-let connection:any = null;
-export let readData:any = null;
-const host = null;
-const port = 8081;
-const portDB = null;
+const uri = "mongodb+srv://admin:mbwscss1234@mbw.qp4qg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-export interface Data{
-    type?: string,
-    dataRead? :string
+router.get('/', async (req,res) =>{
+    const devices = await loadDevices();
+    res.send(await devices.find({}).toArray());
+})
+
+
+async function loadDevices() {
+    const client = await mongodb.MongoClient.connect(
+        uri,
+        {
+            useUnifiedTopology: true
+        }
+    );
+
+    return client.db('mbw-scss').collection('devices');
 }
 
-rethinkdb.connect(
-    {
-        host:'localhost',
-        port:28015
-    },function(err,conn){
-        if (err) throw err;
-        connection = conn;
-    }
-)
-
-router.get('/', (req,res) => {
-    
-    rethinkdb.db('mbw').table('id_microbit').run(
-        connection,
-        function(err,cursor){
-            if (err) throw err;
-            cursor.toArray(function(err,result){
-                if(err) throw err;
-                readData  = result;
-            });
-        }
-    )
-    let newData = {
-        type:'GET',
-        dataRead : readData
-    }
-    res.send(newData)
-});
-
-app.use(express.json()); //parsing data as json
-app.use('/',router);
-
-app.listen(port, () => {
-    console.log("It works")
-})
+module.exports = router

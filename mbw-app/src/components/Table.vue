@@ -139,6 +139,7 @@
   import axios from 'axios';
   import Vue from 'vue'
   import VueAxios from 'vue-axios'
+  import DeviceService from '../plugins/DeviceService'
 
   Vue.use(VueAxios,axios);
   export default {
@@ -155,6 +156,13 @@
       keys:['Name','Temperature','Date'],
       items:[]
     }),
+    async created(){
+      try {
+        this.items = await DeviceService.getDevices();
+      } catch (error) {
+        console.warn(error);
+      }
+    },
     computed:{
       numberOfPages(){
         return Math.ceil(this.items.length / this.itemsPerPage);
@@ -173,25 +181,6 @@
       updateItemsPerPage(number) {
         this.itemsPerPage = number;
       },
-    },
-    mounted(){
-      let https = 'http://localhost:8081/'
-      Vue.axios.get(https).then(
-        (response) =>{
-          for(let i=0;i<response.data.dataRead.length;i++)
-          {
-            let dataToPut = {
-              name:response.data.dataRead[i].name,
-              temperature : response.data.dataRead[i].temperature,
-              date: response.data.dataRead[i].date
-            }
-            this.items.push(dataToPut);
-            // console.warn(response.data.dataRead[i].name);
-          }
-          // this.list = response.data.dataRead[1];
-          // console.warn(response.data.dataRead);
-        }
-      )
     },
   }
 </script>

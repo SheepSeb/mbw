@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "nodemon backend/api.ts"
+    "start": "nodemon ./backend/server.ts"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -15,12 +15,15 @@
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mongodb": "^3.6.6",
     "rethinkdb": "^2.4.2",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vuetify": "^2.4.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/mongodb": "^3.6.12",
     "@types/rethinkdb": "^2.3.16",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
