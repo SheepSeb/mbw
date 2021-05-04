@@ -4,52 +4,113 @@
 #include <stdio.h>
 #include <tock.h>
 #include <temperature.h>
+#include <time.h>
 
 // Sizes in bytes
+#define DEVICE_NAME_SIZE 6
 
 /*******************************************************************************
  * MAIN
  ******************************************************************************/
-#define UUIDS_SIZE 2
-#define TEMPERATURE_SIZE 1
 
-int main(void) {
-  printf("[Project] MBW\n");
+int main(void)
+{
+  // declarations of variables to be used in this BLE example application
+  uint16_t advertising_interval_ms = 100;
 
-  int specialID1 = 1;
-  int specialID2 = 2;
+  int i, j, k;
 
-  uint16_t interval_ms = 100;
-  uint8_t device_name[] = "MBW1";
-  uint16_t uuids[] = {specialID1, specialID2};
+  // TODO: uncomment production and comment testing when deployed
+  /**
+   *  PRODUCTION CODE
+  while (1)
+  {
+    int temperature = 0;
+    temperature_read_sync(&temperature);
+    temperature = temperature/100;
 
-  int temperature = 0;
+    uint8_t data[DEVICE_NAME_SIZE];
 
-  temperature_read_sync(&temperature);
+    char text[10];
 
-  temperature = temperature/100;
+    // TODO: change k to temperature
 
-  uint8_t dataSend[] = {temperature};
+    sprintf(text, "%d", temperature);
 
-  static uint8_t adv_data_buf[ADV_DATA_MAX_SIZE];
+    char idMicrobit[2] = "MB";
 
-  printf("- Starting Device ... %s\n",device_name);
-  AdvData_t adv_data = gap_adv_data_new(adv_data_buf,sizeof(adv_data_buf));
+    for (i = 0; i < 2; i++)
+    {
+      data[i] = idMicrobit[i];
+    }
 
-  gap_add_flags(&adv_data, LE_GENERAL_DISCOVERABLE | BREDR_NOT_SUPPORTED);
+    for (i = 2, j = 0; i < DEVICE_NAME_SIZE; i++, j++)
+    {
+      data[i] = text[j];
+    }
 
-  printf(" - Set device name..%s\n",device_name);
+    static uint8_t adv_data_buf[ADV_DATA_MAX_SIZE];
 
-  gap_add_service_uuid16(&adv_data, uuids, UUIDS_SIZE);
+    printf(" - Initializing BLE... %s\n", data);
+    AdvData_t adv_data = gap_adv_data_new(adv_data_buf, sizeof(adv_data_buf));
 
-  printf("- Setting data temperature %d.. \n",temperature);
+    gap_add_flags(&adv_data, LE_GENERAL_DISCOVERABLE | BREDR_NOT_SUPPORTED);
 
-  gap_add_service_data(&adv_data,uuids[1],dataSend,TEMPERATURE_SIZE);
+    gap_add_device_name(&adv_data, data, DEVICE_NAME_SIZE);
+    ble_start_advertising(ADV_NONCONN_IND, adv_data.buf, adv_data.offset, advertising_interval_ms);
 
-  printf(" -Begin advertising! %s\n", device_name);
-  ble_start_advertising(ADV_NONCONN_IND, adv_data.buf, adv_data.offset, interval_ms);
+    // TODO : add sleep for interval_ms
+    delay_ms(advertising_interval_ms * 100);
 
-  printf(" -Now working evert %d\n",interval_ms);
+    ble_stop_advertising();
+  }
+  **/
 
+  // TESTING
+
+  for (k = 0; k < 9; k++)
+  {
+
+    // TODO: uncomment those lines
+
+    // int temperature = 0;
+    // temperature_read_sync(&temperature);
+    // temperature = temperature/100;
+
+    uint8_t data[DEVICE_NAME_SIZE];
+
+    char text[DEVICE_NAME_SIZE];
+
+    // TODO: change k to temperature
+
+    sprintf(text, "%d", k);
+
+    char idMicrobit[2] = "MB";
+
+    for (i = 0; i < 2; i++)
+    {
+      data[i] = idMicrobit[i];
+    }
+
+    for (i = 2, j = 0; i < DEVICE_NAME_SIZE; i++, j++)
+    {
+      data[i] = text[j];
+    }
+
+    static uint8_t adv_data_buf[ADV_DATA_MAX_SIZE];
+
+    printf(" - Initializing BLE... %s\n", data);
+    AdvData_t adv_data = gap_adv_data_new(adv_data_buf, sizeof(adv_data_buf));
+
+    gap_add_flags(&adv_data, LE_GENERAL_DISCOVERABLE | BREDR_NOT_SUPPORTED);
+
+    gap_add_device_name(&adv_data, data, DEVICE_NAME_SIZE);
+    ble_start_advertising(ADV_NONCONN_IND, adv_data.buf, adv_data.offset, advertising_interval_ms);
+
+    // TODO : add sleep for interval_ms
+    delay_ms(advertising_interval_ms * 100);
+
+    ble_stop_advertising();
+  }
   return 0;
 }
