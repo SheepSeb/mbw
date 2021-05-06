@@ -3,13 +3,11 @@
 ## Stack Install
 ```
 npm install express --save
-npm install rethinkdb
+npm install mongodb
+npm install cors
 ```
 
 ## Run Project
-- RethinkDB/ localhost:8080
-```
-rethinkdb
 ```
 - Express / localhost:8081
 ```
