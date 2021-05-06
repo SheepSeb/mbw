@@ -14,7 +14,7 @@ appRouter.get('/', async (req, res) => {
 async function getDevices() {
   const uri = "mongodb+srv://cristiana25:1qazse4rfvgy7@mbw.jttju.mongodb.net/mbw?retryWrites=true&w=majority";
 
-  const client = new MongoClient(uri, {
+  const client = new mongodb.MongoClient(uri, {
     useUnifiedTopology: true,
   });
   try {
