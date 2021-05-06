@@ -1,25 +1,26 @@
+import { MongoClient } from "mongodb";
 import express from 'express'
-import mongodb from 'mongodb'
 
-const router = express.Router();
+const appRouter = express.Router();
+const uri ="mongodb+srv://cristiana25:1qazse4rfvgy7@mbw.jttju.mongodb.net/mbw?retryWrites=true&w=majority";
 
-const uri = "mongodb+srv://admin:mbwscss1234@mbw.qp4qg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, {
+  useUnifiedTopology: true,
+});
 
-router.get('/', async (req,res) =>{
-    const devices = await loadDevices();
-    res.send(await devices.find({}).toArray());
-})
+appRouter.get('/', async  (req, res) => {
+    const devices = await getDevices();
+    res.send(devices);
+  })
 
-
-async function loadDevices() {
-    const client = await mongodb.MongoClient.connect(
-        uri,
-        {
-            useUnifiedTopology: true
-        }
-    );
-
-    return client.db('mbw-scss').collection('devices');
-}
-
-module.exports = router
+async function getDevices() {
+    
+    await client.connect();
+    const database = client.db('mbw');
+    const pi = database.collection('pi');
+    const devices =  pi.find({}).toArray();
+  
+    return devices;
+    
+  }
+  module.exports = appRouter;
