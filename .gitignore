@@ -333,3 +333,5 @@ dist
 # venv
 venv/
 
+# rethinkdb
+rethinkdb/
