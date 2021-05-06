@@ -2,7 +2,6 @@
 import express from 'express'
 import mongodb from 'mongodb'
 
-const router = express.Router();
 const appRouter = express.Router();
 
 
