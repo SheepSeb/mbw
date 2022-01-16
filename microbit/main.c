@@ -5,7 +5,7 @@
 #include <tock.h>
 #include <temperature.h>
 #include <time.h>
-#include <encrytion.h>
+#include "./encryption.h"
 // Sizes in bytes
 #define DEVICE_NAME_SIZE 6
 
@@ -96,16 +96,16 @@ int main(void)
     {
       data[i] = text[j];
     }
-    char* encrypted_data =  encryptRot13(char* data);
+    char* encrypted_data =  encryptRot13(data);
     //TODO change data to encrypted data (including temperature)
     static uint8_t adv_data_buf[ADV_DATA_MAX_SIZE];
 
-    printf(" - Initializing BLE... %s\n", data);
+    printf(" - Initializing BLE... %s\n", encrypted_data);
     AdvData_t adv_data = gap_adv_data_new(adv_data_buf, sizeof(adv_data_buf));
 
     gap_add_flags(&adv_data, LE_GENERAL_DISCOVERABLE | BREDR_NOT_SUPPORTED);
 
-    gap_add_device_name(&adv_data, data, DEVICE_NAME_SIZE);
+    gap_add_device_name(&adv_data, encrypted_data, DEVICE_NAME_SIZE);
     ble_start_advertising(ADV_NONCONN_IND, adv_data.buf, adv_data.offset, advertising_interval_ms);
 
     // TODO : add sleep for interval_ms

@@ -30,8 +30,9 @@ async def run():
 
             print(d)
 
-            d.name = decrypt_rot13(d.name)
+            #d.name = decrypt_rot13(d.name)
             #if d.name.startsWith("MB") and d.name[2:].isnumeric()  #uncomment for secure version
+            print(d.name)
             if d.name.startswith("MB"):
                today = date.today()
                d1 = today.strftime("%d/%m/%Y")
