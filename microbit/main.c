@@ -5,7 +5,7 @@
 #include <tock.h>
 #include <temperature.h>
 #include <time.h>
-
+#include <encrytion.h>
 // Sizes in bytes
 #define DEVICE_NAME_SIZE 6
 
@@ -96,7 +96,8 @@ int main(void)
     {
       data[i] = text[j];
     }
-
+    char* encrypted_data =  encryptRot13(char* data);
+    //TODO change data to encrypted data (including temperature)
     static uint8_t adv_data_buf[ADV_DATA_MAX_SIZE];
 
     printf(" - Initializing BLE... %s\n", data);
