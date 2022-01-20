@@ -6,6 +6,7 @@ npm install express --save
 npm install mongodb
 npm install cors
 ```
+### Firstly run the web app and afterwards run the server, be aware to have cors enabled for the local testing
 
 ## Run Project
 ```
